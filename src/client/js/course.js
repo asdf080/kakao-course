@@ -41,7 +41,6 @@ const setCourseMarker = () => {
 };
 
 const drawMap = (latitude, longitude) => {
-  // 1번째 인자: 지도 그림 DOM (HTML) . 지도 그리기
   map = new kakao.maps.Map(locationMap, {
     center: new kakao.maps.LatLng(latitude, longitude),
     level: 3,
