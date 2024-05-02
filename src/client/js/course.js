@@ -6,7 +6,7 @@ let userLongitude;
 let isMapDrawn = false;
 let courseData = [];
 let markers = [];
-let clickCourse = 0; //0은 현재위치, 나머지는 id(1번부터)
+let clickCourse; //0은 현재위치, 나머지는 id(1번부터)
 
 const panTo = (lati, long) => {
   const position = new kakao.maps.LatLng(lati, long);
@@ -20,7 +20,8 @@ const clickCourseList = (e, courseNo) => {
     e.currentTarget.classList.add("on");
 
     let courseLati, courseLong;
-    if (courseNo === "0") {
+
+    if (courseNo === 0) {
       courseLati = userLatitude;
       courseLong = userLongitude;
     } else {
@@ -94,7 +95,7 @@ const makeCourseNaviHTML = (data) => {
   const courseWrap = document.getElementById("courseWrap");
   let html = "";
   data.forEach((data) => (html += `<li class="course" onclick="clickCourseList(event, ${data.course_no})"><p>${data.course_name}</p></li>`));
-  html += `<li id="myPosition" class="course on" onclick="clickCourseList(event, ${0})">나의 위치</li>`;
+  html += `<li id="myPosition" class="course on" onclick="clickCourseList(event, 0)">나의 위치</li>`;
   courseWrap.innerHTML = html;
 };
 
