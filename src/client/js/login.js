@@ -35,3 +35,15 @@ const loginFetch = async () => {
 };
 
 loginBtn.addEventListener("click", loginFetch);
+
+const checkError = () => {
+  const notFoundAccessTokenError = getParameterByName("error");
+  if (notFoundAccessTokenError == "not_found_access_token") {
+    msgAlert("bottom", "인증에 실패하였습니다.", "error");
+  } else if (notFoundAccessTokenError == "need_login") {
+    msgAlert("bottom", "로그인이 필요합니다.", "error");
+  }
+  const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+};
+checkError();

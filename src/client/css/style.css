@@ -136,9 +136,9 @@
 }
 .course-nav-ul .course .mark-wrap {
   position: absolute;
-  height: 30px;
-  right: 10px;
-  top: -15px;
+  height: 45px;
+  right: -5px;
+  top: 0;
   transform: rotate(6deg);
 }
 .course-nav-ul .course .mark-wrap img {
