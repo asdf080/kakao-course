@@ -23,7 +23,13 @@ const courseCheckFetch = async (qrCode) => {
     body: JSON.stringify({ qrCode }),
   });
   const result = await response.json();
-  console.log(result);
+  if (result.status === "success") {
+    msgAlert("bottom", "방문 완료", "success");
+    setTimeout(() => {
+      window.location.href = "/course";
+    }, 1500);
+    return;
+  } else msgAlert("bottom", result.message, "error");
   setTimeout(startScan, 3000);
 };
 

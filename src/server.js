@@ -1,8 +1,8 @@
 import express from "express";
-import { coursePage, introducePage, joinPage, loginPage, mainPage, qrPage } from "./controller/webController.js";
-import { getCourseList } from "./controller/courseController.js";
+import { coursePage, introducePage, joinPage, loginPage, mainPage, qrPage, userPage } from "./controller/webController.js";
+import { getCourseList, qrCheck } from "./controller/courseController.js";
 import { joinUser, loginUser } from "./controller/authController.js";
-import { notNeededAuth } from "./middleware/auth.js";
+import { neededAuth, notNeededAuth } from "./middleware/auth.js";
 
 const app = express();
 const PORT = 8000;
@@ -31,8 +31,10 @@ app.get("/course", coursePage);
 app.get("/login", loginPage);
 app.get("/join", joinPage);
 app.get("/qr", qrPage);
+app.get("/users", userPage);
 
 // api 라우터
 app.get("/api/course", notNeededAuth, getCourseList);
+app.post("/api/course", neededAuth, qrCheck);
 app.post("/api/join", joinUser);
 app.post("/api/login", loginUser);
