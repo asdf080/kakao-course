@@ -24,7 +24,13 @@ const joinFetch = async () => {
       userPW,
     }),
   });
-  console.log(response);
+  const data = await response.json();
+  if (data.status === "success") {
+    msgAlert("bottom", "회원가입이 완료되었습니다.", "success");
+    setTimeout(() => (window.location.href = "/login"), 1000);
+  } else {
+    msgAlert("bottom", "회원가입에 실패했습니다.", "error");
+  }
 };
 
 joinBtn.addEventListener("click", joinFetch);

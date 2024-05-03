@@ -1,7 +1,7 @@
 import express from "express";
 import { coursePage, introducePage, joinPage, loginPage, mainPage } from "./controller/webController.js";
 import { getCourseList } from "./controller/courseController.js";
-import { joinUser } from "./controller/authController.js";
+import { joinUser, loginUser } from "./controller/authController.js";
 
 const app = express();
 const PORT = 8000;
@@ -33,3 +33,4 @@ app.get("/join", joinPage);
 // api 라우터
 app.get("/api/course", getCourseList);
 app.post("/api/join", joinUser);
+app.post("/api/login", loginUser);
