@@ -99,7 +99,7 @@ const makeCourseNaviHTML = (data) => {
   courseWrap.innerHTML = html;
 };
 
-// 코스데이터 불러오는 fetch함수
+// 코스데이터 불러오기
 const getCourseList = async () => {
   const response = await fetch("/api/course");
   const result = await response.json();
