@@ -24,7 +24,14 @@ const loginFetch = async () => {
       userPW,
     }),
   });
-  console.log(response);
+  const result = await response.json();
+  if (result.status === "success") {
+    localStorage.setItem("accessToken", result.data.accessToken);
+    msgAlert("center", "로그인이 완료되었습니다.", "success");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
+  } else msgAlert("bottom", "로그인에 실패했습니다.", "error");
 };
 
 loginBtn.addEventListener("click", loginFetch);

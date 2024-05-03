@@ -50,7 +50,11 @@ const delMarker = () => {
 const addCourseMarker = (course) => {
   let markerImageUrl = "/file/map_not_done.png";
   let markerImageSize = new kakao.maps.Size(24, 35);
-  // 미방문시 마커
+  // 방문시 마커
+  if (course.user_courses_no) {
+    markerImageUrl = "/file/map_complete.jpg";
+    markerImageSize = new kakao.maps.Size(24, 35);
+  }
   const kakaoMakerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize);
   const latlng = new kakao.maps.LatLng(course.course_latitude, course.course_longitude);
   new kakao.maps.Marker({
@@ -59,7 +63,6 @@ const addCourseMarker = (course) => {
     title: course.course_name,
     image: kakaoMakerImage,
   });
-  // 방문시 마커
 };
 
 const drawMap = (latitude, longitude) => {
@@ -94,14 +97,23 @@ const configLocation = () => {
 const makeCourseNaviHTML = (data) => {
   const courseWrap = document.getElementById("courseWrap");
   let html = "";
-  data.forEach((data) => (html += `<li class="course" onclick="clickCourseList(event, ${data.course_no})"><p>${data.course_name}</p></li>`));
+  data.forEach((data) => {
+    html += `<li class="course" onclick="clickCourseList(event, ${data.course_no})">`;
+    if (data.user_courses_no) {
+      html += `<div class="mark-wrap"><img src="/file/complete.png"/></div>`;
+    }
+    html += `<p>${data.course_name}</p></li>`;
+  });
   html += `<li id="myPosition" class="course on" onclick="clickCourseList(event, 0)">나의 위치</li>`;
   courseWrap.innerHTML = html;
 };
 
 // 코스데이터 불러오기
 const getCourseList = async () => {
-  const response = await fetch("/api/course");
+  const accessToken = localStorage.getItem("accessToken");
+  const response = await fetch("/api/course", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
   const result = await response.json();
   courseData = result.data;
   makeCourseNaviHTML(courseData);
